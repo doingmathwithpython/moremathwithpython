@@ -1,6 +1,5 @@
 '''
-The ration between consecutive fibonacci numbers and the ratio between a distance
-measured in miles and kilometers tend to be ~ 1.6 (Golden Ratio)
+Demonstration of https://www.reddit.com/r/AskReddit/comments/4kz3di/whats_your_favourite_maths_fact/d3j55hv
 '''
 
 import matplotlib.pyplot as plt
@@ -31,10 +30,19 @@ def plot_fibo_ratio(series):
     plt.ylabel('Ratio')
     plt.xlabel('No.')
  
-def plot_km_miles():
-    kms = range(1, 100)
+def plot_km_miles_ratio(kms):
     miles_km = [1.6094*km/km for km in kms]
     plt.plot(miles_km, 'ro')
+
+def estimate_kms(miles):
+    approx_kms = []
+    exact_kms = [1.6094*m for m in miles[1:]]
+    for i in range(len(series)-1):
+        approx_kms.append(series[i]+series[i+1])
+
+    plt.figure(2)
+    plt.plot(approx_kms, exact_kms, 'ro')
+    plt.title('Approximating kilometers using fibonacci')
 
 
 if __name__ == '__main__':
@@ -42,9 +50,10 @@ if __name__ == '__main__':
     num = 100
     series = fibo(num)
     plot_fibo_ratio(series)
-
-    plot_km_miles()
-
+    plot_km_miles_ratio(series)
+    plt.figure(1)
     plt.title('Ratio between Fibonacci numbers & Golden ratio')
     plt.legend(['Fibonacci Numbers', 'Miles/Km'])
+    estimate_kms(series)
+
     plt.show()
